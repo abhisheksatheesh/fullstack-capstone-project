@@ -1,6 +1,6 @@
 ---
 name: User Story
-about: Use this template to create Agile user stories for the GiftLink web application.
+about: This template defines a user story
 title: ''
 labels: ''
 assignees: ''
