@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-
+import {urlConfig} from '../../config';
+import { useAppContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 
 function RegisterPage() {
@@ -8,9 +10,47 @@ function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+     //Task 4: Include a state for error message.
+    const [showerr, setShowerr] = useState('');
+
+    //Task 5: Create a local variable for `navigate`   and `setIsLoggedIn`.
+    const navigate = useNavigate();
+    const { setIsLoggedIn } = useAppContext();
+
     const handleRegister = async () => {
-        console.log("Register invoked")
-    }
+        const response = await fetch(`${urlConfig.backendUrl}/app/api/auth/register`, {
+            //Step 1 - Task 6
+            method: 'POST',
+            //Step 1 - Task 7
+            headers: {
+                'content-type': 'application/json',
+            },
+            //Step 1 - Task 8
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password
+            })
+        });
+        //Step 2 - Task 1
+        const json = await response.json();
+        console.log('json data', json);
+        console.log('er', json.error);
+        if (json.authtoken) {
+            sessionStorage.setItem('auth-token', json.authtoken);
+            sessionStorage.setItem('name', firstName);
+            sessionStorage.setItem('email', json.email);
+            //Step 2 - Task 3
+            setIsLoggedIn(true);
+            //Step 2 - Task 4
+                navigate('/app');
+            }
+            if (json.error) {
+            //Step 2 - Task 5
+                setShowerr(json.error);
+            }
+        }
 
 return (
     <div className="container mt-5">
@@ -55,6 +95,8 @@ return (
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
+                         {/* Step 2 - Task 6*/}
+                         <div className="text-danger">{showerr}</div>
                     </div>
 
                     <div className="mb-4">
