@@ -13,8 +13,8 @@ router.get('/', async (req, res, next) => {
         const gifts = await collection.find({}).toArray();
         res.json(gifts);
     } catch (e) {
-        logger.console.error('oops something went wrong', e)
-        next(e);
+       logger.error(e, 'oops something went wrong');
+res.status(500).json({ error: 'Internal Server Error' })
     }
 });
 
