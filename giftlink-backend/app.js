@@ -10,7 +10,7 @@ const {loadData} = require("./util/import-mongo/index");
 
 const app = express();
 
-app.use(cors({origin: "*", methods: "GET,POST,PUT,DELETE", allowedHeaders: "Content-Type"}));
+app.use(cors({origin: "*", methods: "GET,POST,PUT,DELETE", allowedHeaders: ["Content-Type", "Authorization"]}));
 
 const port = 3060;
 
