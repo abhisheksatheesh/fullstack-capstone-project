@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
         res.json(gifts);
     } catch (e) {
        logger.error(e, 'oops something went wrong');
-res.status(500).json({ error: 'Internal Server Error' })
+res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
